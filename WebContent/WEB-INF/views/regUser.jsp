@@ -1,0 +1,32 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"
+    import="nksnSoftSys.com.bean.posi.PosiBean,java.util.*,nksnSoftSys.com.bean.userInfo.UserBean"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登録画面</title>
+<script>
+	function dips(){
+		confirm("本当に登録しますか？");
+	}
+</script>
+</head>
+<body>
+	<span class="label label-danger">${message}</span>
+	<form action="<%=request.getContextPath()%>/BBBUserRegController" method="post">
+		ユーザーID：<input type="text" name="userId" maxlength="4" value="${userId}" placeholder="4文字固定の数字"><br>
+		パスワード：<input type="text" name="pass" maxlength="4" value="${pass}" placeholder="4文字固定の数字"><br>
+		名前：<input type="text" name="name" maxlength="10" value="${name}" placeholder="10文字以内"><br>
+		守備位置：<select name="posiId">
+					<c:forEach var="list" items="${posiBean}">
+						<option value="${list.posiId}"><c:out value="${list.posiName}" /></option>
+					</c:forEach>
+				</select>
+		<input type="submit" value="登録" onClick="dips()">
+		<input type="reset" value="クリア">
+		<input type="button" value="戻る" onClick="history.back()">
+	</form>
+</body>
+</html>
