@@ -15,13 +15,16 @@ public class UserBean implements Serializable {
 	private int homeRun; // 本塁打
 	private int rbi; //打点
 	private String onBaseAve; //  出塁率
+	private String handId; // 効き投げ効き打ちID
+	private String autFlg; // 権限フラグ
 
 	public UserBean() {};
 
-	public UserBean(String userId, String pass, String name) {
+	public UserBean(String userId, String pass, String name, String autFlg) {
 		this.userId = userId;
 		this.pass = pass;
 		this.name = name;
+		this.autFlg = autFlg;
 	}
 
 	public UserBean(String name, String posiName) {
@@ -29,7 +32,8 @@ public class UserBean implements Serializable {
 		this.posiName = posiName;
 	}
 
-	public UserBean(String name, String posiName, int game, String ave, int hit, int homeRun, int rbi, String onBaseAve) {
+	public UserBean(String userId, String name, String posiName, int game, String ave, int hit, int homeRun, int rbi, String onBaseAve) {
+		this.userId = userId;
 		this.name = name;
 		this.posiName = posiName;
 		this.game = game;
@@ -119,5 +123,22 @@ public class UserBean implements Serializable {
 	public void setOnBaseAve(String onBaseAve) {
 		this.onBaseAve = onBaseAve;
 	}
+
+	public String getHandId() {
+		return handId;
+	}
+
+	public void setHandId(String handId) {
+		this.handId = handId;
+	}
+
+	public String getAutFlg() {
+		return autFlg;
+	}
+
+	public void setAutFlg(String autFlg) {
+		this.autFlg = autFlg;
+	}
+
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 import nksnSoftSys.com.bean.kjnGra.kjnGraBean;
 
-public class kjnGraDao {
+public class KjnGraDao {
 	final String jdbcId = "root";
 	final String jdbcPass = "root";
 	final String jdbcUrl = "jdbc:mysql://localhost:3306/nksnSoftSys?autoReconnect=true&useSSL=false";
@@ -85,5 +85,33 @@ public class kjnGraDao {
 			}
 		}
 		return kjnGraList;
+	}
+
+	public boolean kjnGraDell(String userId) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
+			String sql = "DELETE FROM KJN_GRA_TBL WHERE user_id = ?";
+			PreparedStatement ps= con.prepareStatement(sql);
+			ps.setString(1, userId);
+			ps.executeUpdate();
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally{
+			if(con != null) {
+				try {
+					con.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+		}return true;
 	}
 }

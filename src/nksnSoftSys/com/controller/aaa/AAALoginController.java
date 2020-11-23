@@ -58,4 +58,12 @@ public class AAALoginController extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(true);
+		session.invalidate();
+		request.setAttribute("message", "ログアウトしました。");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
+		dispatcher.forward(request, response);
+	}
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="nksnSoftSys.com.bean.posi.PosiBean,java.util.*,nksnSoftSys.com.bean.userInfo.UserBean"%>
+    import="nksnSoftSys.com.bean.posi.PosiBean,java.util.*,nksnSoftSys.com.bean.userInfo.UserBean,nksnSoftSys.com.bean.hand.HandBean"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -24,6 +24,16 @@
 						<option value="${list.posiId}"><c:out value="${list.posiName}" /></option>
 					</c:forEach>
 				</select>
+		投打：<select name="handId">
+				<c:forEach var="list1" items="${handBean}">
+					<option value="${list1.handId}"><c:out value="${list1.hand}" /></option>
+				</c:forEach>
+			</select>
+		権限：<select name="autFlg">
+				<c:forEach var="list2" items="${autBean}">
+					<option value="${list2.autId}"><c:out value="${list2.aut}" /></option>
+				</c:forEach>
+			</select>
 		<input type="submit" value="登録" onClick="dips()">
 		<input type="reset" value="クリア">
 		<input type="button" value="戻る" onClick="history.back()">

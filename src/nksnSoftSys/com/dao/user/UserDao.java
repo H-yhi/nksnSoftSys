@@ -24,7 +24,7 @@ public class UserDao {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
 
-			String sql = "SELECT user_id, pass, name FROM USER_INFO WHERE user_id = ? AND pass = ?";
+			String sql = "SELECT user_id, pass, name, aut_flg FROM USER_INFO WHERE user_id = ? AND pass = ?";
 			PreparedStatement ps= con.prepareStatement(sql);
 
 			ps.setString(1, userId);
@@ -36,7 +36,8 @@ public class UserDao {
 				String userId2 = rs.getString("user_id");
 				String pass2 = rs.getString("pass");
 				String name2 = rs.getString("name");
-				UserBean userBean = new UserBean(userId2,pass2,name2);
+				String autFlg = rs.getString("aut_flg");
+				UserBean userBean = new UserBean(userId2,pass2,name2,autFlg);
 				return userBean;
 			}else {
 				return null;
@@ -59,7 +60,10 @@ public class UserDao {
 		}
 	}
 
-	public Boolean regUser(String userId, String pass, String name, String posiId) {
+	// 20201122 start
+	//public Boolean regUser(String userId, String pass, String name, String posiId) {
+	public Boolean regUser(String userId, String pass, String name, String posiId, String handId, String autFlg) {
+	// 20201122 end
 		Connection con = null;
 		try {
 			String regex_num = "^[0-9]+$" ; // 数値のみ
@@ -78,13 +82,20 @@ public class UserDao {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
 
-			String sql = "INSERT INTO USER_INFO(user_id,pass,name,posi_id) VALUES(?,?,?,?)";
+			// 20201122 start
+			//String sql = "INSERT INTO USER_INFO(user_id,pass,name,posi_id) VALUES(?,?,?,?)";
+			String sql = "INSERT INTO USER_INFO(user_id,pass,name,posi_id,hand_id,aut_Flg) VALUES(?,?,?,?,?,?)";
+			// 20201122 end
 			PreparedStatement ps= con.prepareStatement(sql);
 
 			ps.setString(1, userId);
 			ps.setString(2, pass);
 			ps.setString(3, name);
 			ps.setString(4, posiId);
+			// 20201122 start
+			ps.setString(5, handId);
+			ps.setString(6, autFlg);
+			// 20201122 end
 			ps.executeUpdate();
 			return true;
 
@@ -113,21 +124,7 @@ public class UserDao {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
 
-//			String sql1 = "select name, posi_name from user_info";
-//			String sql2 = "inner join posi_tbl where user_info.posi_id = posi_tbl.posi_id";
-//			String sql3 = "order by user_info.posi_id asc, name asc";
-//			String sql4 = sql1 + " " + sql2 + " " + sql3;
-//			PreparedStatement ps= con.prepareStatement(sql4);
-//			ResultSet rs = ps.executeQuery();
-//
-//			while(rs.next()) {
-//				String name = rs.getString("name");
-//				String posiName = rs.getString("posi_name");
-//				UserBean userBean = new UserBean(name, posiName);
-//				userBeanList.add(userBean);
-//			}
-
-			String sql1 = "select name, posi_name, game,";
+			String sql1 = "select user_info.user_id,name, posi_name, game,";
 			String sql2 = "substring(cast((hit / at_bat) as char),2,4) as ave,";
 			String sql3 = "hit, home_run, rbi,";
 			String sql4 = "substring(cast((hit + fo_ball + de_ball) / (at_bat + fo_ball + de_ball + sac_fly) as char) ,2,4)as on_base_ave";
@@ -140,6 +137,7 @@ public class UserDao {
 			PreparedStatement ps= con.prepareStatement(sql10);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
+				String userId = rs.getString("user_id");
 				String name = rs.getString("name");
 				String posiName = rs.getString("posi_name");
 				int game = rs.getInt("game");
@@ -154,7 +152,7 @@ public class UserDao {
 				if (onBaseAve == null) {
 					onBaseAve = "---";
 				}
-				UserBean userBean = new UserBean(name,posiName,game,ave, hit,homeRun,rbi,onBaseAve);
+				UserBean userBean = new UserBean(userId,name,posiName,game,ave, hit,homeRun,rbi,onBaseAve);
 				userBeanList.add(userBean);
 			}
 		}catch(SQLException e) {
@@ -174,5 +172,32 @@ public class UserDao {
 			}
 		}
 		return userBeanList;
+	}
+
+	public boolean userDell(String userId) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
+			String sql = "DELETE FROM USER_INFO WHERE USER_ID = ?";
+			PreparedStatement ps= con.prepareStatement(sql);
+			ps.setString(1, userId);
+			ps.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally{
+			if(con != null) {
+				try {
+					con.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+		}return true;
 	}
 }
