@@ -10,8 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import nksnSoftSys.com.bean.aut.AutBean;
+import nksnSoftSys.com.bean.hand.HandBean;
+import nksnSoftSys.com.bean.posi.PosiBean;
 import nksnSoftSys.com.bean.userInfo.UserBean;
+import nksnSoftSys.com.dao.aut.AutDao;
+import nksnSoftSys.com.dao.hand.HandDao;
 import nksnSoftSys.com.dao.kjnGra.KjnGraDao;
+import nksnSoftSys.com.dao.posi.PosiDao;
 import nksnSoftSys.com.dao.user.UserDao;
 
 /**
@@ -53,12 +59,29 @@ public class CCCUserUpDellController extends HttpServlet {
 				userDao.userDell(delete);
 				List<UserBean> list = userDao.findAll();
 				request.setAttribute("list", list);
+				request.setAttribute("message", "削除に成功しました。");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/applicationList.jsp");
 				dispatcher.forward(request, response);
 			}else {
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/regUser.jsp");
+				request.setAttribute("message", "削除に失敗しました。");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/applicationList.jsp");
 				dispatcher.forward(request, response);
 			}
+		}else {
+			UserDao userDao = new UserDao();
+			UserBean userBean = userDao.userFind(update);
+			request.setAttribute("userBean", userBean);
+			PosiDao posiDao = new PosiDao();
+			List<PosiBean> posiBean = posiDao.posiFind();
+			request.setAttribute("posiBean",posiBean);
+			HandDao handDao = new HandDao();
+			List<HandBean> handBean = handDao.handFind();
+			request.setAttribute("handBean",handBean);
+			AutDao autDao = new AutDao();
+			List<AutBean> autBean = autDao.findAll();
+			request.setAttribute("autBean",autBean);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upUser.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 

@@ -9,7 +9,9 @@
 <title>登録画面</title>
 <script>
 	function dips(){
-		confirm("本当に登録しますか？");
+		if(window.confirm('本当にいいんですね？') == false){
+			return false;
+		}
 	}
 </script>
 </head>
@@ -34,7 +36,7 @@
 					<option value="${list2.autId}"><c:out value="${list2.aut}" /></option>
 				</c:forEach>
 			</select>
-		<input type="submit" value="登録" onClick="dips()">
+		<input type="submit" value="登録" onClick="return dips()">
 		<input type="reset" value="クリア">
 		<input type="button" value="戻る" onClick="history.back()">
 	</form>

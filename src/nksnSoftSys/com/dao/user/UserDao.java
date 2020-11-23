@@ -200,4 +200,49 @@ public class UserDao {
 			}
 		}return true;
 	}
+
+	public UserBean userFind(String userId) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
+			String sql1 = "select pass,name,posi_name,hand,aut from user_info";
+			String sql2 = "inner join posi_tbl";
+			String sql3 = "inner join hand_tbl";
+			String sql4 = "inner join aut_tbl";
+			String sql5 = "where user_info.posi_id = posi_tbl.posi_id and user_info.hand_id = hand_tbl.hand_id";
+			String sql6 = "and user_info.aut_flg = aut_tbl.aut_id";
+			String sql7 = "and user_info.user_id = ?";
+			String sql8 = sql1 + " " + sql2 + " " + sql3 + " " + sql4 + " " + sql5 + " " + sql6 + " " + sql7;
+
+
+			PreparedStatement ps= con.prepareStatement(sql8);
+			ps.setString(1, userId);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				String pass = rs.getString("pass");
+				String name = rs.getString("name");
+				String posiName = rs.getString("posi_name");
+				String hand = rs.getString("hand");
+				String aut = rs.getString("aut");
+				UserBean userBean = new UserBean(pass,name,posiName,hand,aut);
+				return userBean;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally{
+			if(con != null) {
+				try {
+					con.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}return null;
+	}
 }
