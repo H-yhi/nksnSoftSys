@@ -206,13 +206,13 @@ public class UserDao {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
-			String sql1 = "select pass,name,posi_name,hand,aut from user_info";
-			String sql2 = "inner join posi_tbl";
-			String sql3 = "inner join hand_tbl";
-			String sql4 = "inner join aut_tbl";
-			String sql5 = "where user_info.posi_id = posi_tbl.posi_id and user_info.hand_id = hand_tbl.hand_id";
-			String sql6 = "and user_info.aut_flg = aut_tbl.aut_id";
-			String sql7 = "and user_info.user_id = ?";
+			String sql1 = "select pass,name,s.posi_id,s.hand_id,s.aut_flg,user_id from user_info as s";
+			String sql2 = "inner join posi_tbl as p";
+			String sql3 = "inner join hand_tbl as h";
+			String sql4 = "inner join aut_tbl as a";
+			String sql5 = "where s.posi_id = p.posi_id and s.hand_id = h.hand_id";
+			String sql6 = "and s.aut_flg = a.aut_id";
+			String sql7 = "and s.user_id = ?";
 			String sql8 = sql1 + " " + sql2 + " " + sql3 + " " + sql4 + " " + sql5 + " " + sql6 + " " + sql7;
 
 
@@ -222,10 +222,11 @@ public class UserDao {
 			if(rs.next()) {
 				String pass = rs.getString("pass");
 				String name = rs.getString("name");
-				String posiName = rs.getString("posi_name");
-				String hand = rs.getString("hand");
-				String aut = rs.getString("aut");
-				UserBean userBean = new UserBean(pass,name,posiName,hand,aut);
+				String posiId = rs.getString("s.posi_id");
+				String handId = rs.getString("s.hand_id");
+				String autId = rs.getString("s.aut_flg");
+				String userId1 = rs.getString("user_id");
+				UserBean userBean = new UserBean(pass,name,posiId,handId,autId,userId1);
 				return userBean;
 			}
 		}catch(SQLException e) {
@@ -244,5 +245,51 @@ public class UserDao {
 				}
 			}
 		}return null;
+	}
+
+	public boolean userUp(String pass, String name, String posiId, String handId, String autFlg, String userId) {
+		Connection con = null;
+		try {
+			String regex_num = "^[0-9]+$" ; // 数値のみ
+			Pattern p1 = Pattern.compile(regex_num);
+			Matcher m2 = p1.matcher(pass);
+			boolean result12 = m2.matches();
+			if(pass == "" || name == "") {
+				return false;
+			}else if(pass.length() != 4) {
+				return false;
+			}else if(result12 == false) {
+				return false;
+			}
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
+			String sql1 = "update user_info set pass = ?, name = ?, posi_id = ?, hand_id = ?, aut_flg = ?";
+			String sql2 = "where user_id = ?";
+			String sql3 = sql1 + " " + sql2;
+			PreparedStatement ps= con.prepareStatement(sql3);
+			ps.setString(1,pass);
+			ps.setString(2,name);
+			ps.setString(3,posiId);
+			ps.setString(4,handId);
+			ps.setString(5,autFlg);
+			ps.setString(6,userId);
+			ps.executeUpdate();
+
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally{
+			if(con != null) {
+				try {
+					con.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+		}return true;
 	}
 }

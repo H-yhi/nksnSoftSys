@@ -32,12 +32,13 @@ public class UserBean implements Serializable {
 		this.posiName = posiName;
 	}
 
-	public UserBean(String pass, String name, String posiName, String hand, String aut) {
+	public UserBean(String pass, String name, String posiId, String handId, String autFlg, String userId) {
 		this.pass = pass;
 		this.name = name;
-		this.posiName = posiName;
-		this.handId = hand;
-		this.autFlg = aut;
+		this.posiId = posiId;
+		this.handId = handId;
+		this.autFlg = autFlg;
+		this.userId = userId;
 	}
 
 	public UserBean(String userId, String name, String posiName, int game, String ave, int hit, int homeRun, int rbi, String onBaseAve) {
