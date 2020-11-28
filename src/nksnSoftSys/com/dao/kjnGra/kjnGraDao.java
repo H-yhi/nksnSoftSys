@@ -50,21 +50,34 @@ public class KjnGraDao {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
 
-			String sql1 = "select game,substring(cast((hit / at_bat) as char),2,4) as ave,";
-			String sql2 = "hit, home_run, rbi,";
-			String sql3 = "substring(cast((hit + fo_ball + de_ball) / (at_bat + fo_ball + de_ball + sac_fly) as char) ,2,4)as on_base_ave";
-			String sql4 = "from kjn_gra_tbl";
+			String sql1 = "select k.user_id,name,game,at_bat,bat_con,hit,sec_hit,thr_hit,home_run,rbi,";
+			String sql2 = "st_base,fo_ball,de_ball,sac_roll,sac_fly  from kjn_gra_tbl as k";
+			String sql3 = "inner join user_info as u";
+			String sql4 = "where u.user_id = k.user_id";
 			String sql5 = sql1 + " " + sql2 + " " + sql3 + " " + sql4;
 			PreparedStatement ps= con.prepareStatement(sql5);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
+				String userId = rs.getString("k.user_id");
+				String name = rs.getString("name");
 				int game = rs.getInt("game");
-				String ave = rs.getString("ave");
+				int atBat = rs.getInt("at_bat");
+				int batCon = rs.getInt("bat_con");
 				int hit = rs.getInt("hit");
+				int secHit = rs.getInt("sec_hit");
+				int thrHit = rs.getInt("thr_hit");
 				int homeRun = rs.getInt("home_run");
 				int rbi = rs.getInt("rbi");
-				String onBaseAve = rs.getString("on_base_ave");
-				kjnGraBean kjnGraBean = new kjnGraBean(game, ave, hit, homeRun, rbi, onBaseAve);
+				int stBase = rs.getInt("st_base");
+				int foBall = rs.getInt("fo_ball");
+				int deBall = rs.getInt("de_ball");
+				int sacRoll = rs.getInt("sac_roll");
+				int sacFly = rs.getInt("sac_fly");
+				kjnGraBean kjnGraBean = new kjnGraBean(userId,name,game,
+						atBat,batCon,hit,
+						secHit,thrHit,homeRun,
+						rbi,stBase,foBall,
+						deBall,sacRoll,sacFly);
 				kjnGraList.add(kjnGraBean);
 			}
 

@@ -28,6 +28,9 @@
     <form action="<%=request.getContextPath()%>/AAALoginController" method="get">
     	<input type="submit" value="ログアウト">
     </form>
+    <form action="<%=request.getContextPath()%>/CCCUserUpDellController" method="get">
+    	<input type="submit" value="成績反映へ">
+    </form>
     	<table>
     		<tr><th>名前</th><th>守備</th><th>試合数</th><th>打率</th>
     		<th>安打数</th><th>本塁打</th><th>打点</th><th>出塁率</th></tr>

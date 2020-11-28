@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import nksnSoftSys.com.bean.aut.AutBean;
+import nksnSoftSys.com.bean.con.ConBean;
 import nksnSoftSys.com.bean.hand.HandBean;
 import nksnSoftSys.com.bean.posi.PosiBean;
 import nksnSoftSys.com.bean.userInfo.UserBean;
 import nksnSoftSys.com.dao.aut.AutDao;
+import nksnSoftSys.com.dao.con.ConDao;
 import nksnSoftSys.com.dao.hand.HandDao;
 import nksnSoftSys.com.dao.kjnGra.KjnGraDao;
 import nksnSoftSys.com.dao.posi.PosiDao;
@@ -40,7 +42,17 @@ public class CCCUserUpDellController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("UTF-8");
+		ConDao conDao = new ConDao();
+		List<ConBean> conBeanList = conDao.conFindAll();
+		request.setAttribute("conBeanList",conBeanList);
+
+		UserDao userDao = new UserDao();
+		List<UserBean> userBeanList = userDao.findAll();
+		request.setAttribute("userBeanList",userBeanList);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**

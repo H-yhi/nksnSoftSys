@@ -20,18 +20,32 @@ public class kjnGraBean implements Serializable {
 	private int sacFly; // 犠飛
 	private String ave; // 打率
 	private String onBaseAve; // 出塁率
+	private String name; // 名前
 
 	public kjnGraBean() {}
 	public kjnGraBean(String userId) {
 		this.userId = userId;
 	}
-	public kjnGraBean(int game, String ave, int hit, int homeRun, int rbi, String onBaseAve) {
+	public kjnGraBean(String userId, String name, int game,
+			int atBat, int batCon, int hit,
+			int secHit, int thrHit, int homeRun,
+			int rbi, int stBase, int foBall,
+			int deBall, int sacRoll, int sacFly) {
+		this.userId = userId;
+		this.name = name;
 		this.game = game;
-		this.ave = ave;
+		this.atBat = atBat;
+		this.batCon = batCon;
 		this.hit = hit;
+		this.secHit = secHit;
+		this.thrHit = thrHit;
 		this.homeRun = homeRun;
 		this.rbi = rbi;
-		this.onBaseAve = onBaseAve;
+		this.stBase = stBase;
+		this.foBall = foBall;
+		this.deBall = deBall;
+		this.sacRoll = sacRoll;
+		this.sacFly = sacFly;
 	}
 
 	public String getUserId() {
@@ -130,4 +144,11 @@ public class kjnGraBean implements Serializable {
 	public void setOnBaseAve(String onBaseAve) {
 		this.onBaseAve = onBaseAve;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }
