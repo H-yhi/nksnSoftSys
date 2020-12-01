@@ -125,9 +125,9 @@ public class UserDao {
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
 
 			String sql1 = "select user_info.user_id,name, posi_name, game,";
-			String sql2 = "substring(cast((hit / at_bat) as char),2,4) as ave,";
-			String sql3 = "hit, home_run, rbi,";
-			String sql4 = "substring(cast((hit + fo_ball + de_ball) / (at_bat + fo_ball + de_ball + sac_fly) as char) ,2,4)as on_base_ave";
+			String sql2 = "cast(( (hit + sec_hit + thr_hit + home_run) / at_bat) as char) as ave,";
+			String sql3 = "home_run, rbi, hit + sec_hit + thr_hit + home_run as all_hit,";
+			String sql4 = "cast((hit + sec_hit + thr_hit + home_run + fo_ball + de_ball) / (at_bat + fo_ball + de_ball + sac_fly) as char) as on_base_ave";
 			String sql5 = "from user_info";
 			String sql6 = "inner join posi_tbl";
 			String sql7 = "inner join kjn_gra_tbl";
@@ -142,15 +142,23 @@ public class UserDao {
 				String posiName = rs.getString("posi_name");
 				int game = rs.getInt("game");
 				String ave = rs.getString("ave");
-				int hit = rs.getInt("hit");
+				int hit = rs.getInt("all_hit");
 				int homeRun = rs.getInt("home_run");
 				int rbi = rs.getInt("rbi");
 				String onBaseAve = rs.getString("on_base_ave");
 				if (ave == null) {
 					ave = "---";
+				}else if(ave.equals("1.0000")) {
+					ave = ave.substring(0,5);
+				}else {
+					ave = ave.substring(1,5);
 				}
 				if (onBaseAve == null) {
 					onBaseAve = "---";
+				}else if (onBaseAve.equals("1.0000")) {
+					onBaseAve = onBaseAve.substring(0,5);
+				}else {
+					onBaseAve = onBaseAve.substring(1,5);
 				}
 				UserBean userBean = new UserBean(userId,name,posiName,game,ave, hit,homeRun,rbi,onBaseAve);
 				userBeanList.add(userBean);

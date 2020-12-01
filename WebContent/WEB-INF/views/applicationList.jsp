@@ -28,9 +28,6 @@
     <form action="<%=request.getContextPath()%>/AAALoginController" method="get">
     	<input type="submit" value="ログアウト">
     </form>
-    <form action="<%=request.getContextPath()%>/CCCUserUpDellController" method="get">
-    	<input type="submit" value="成績反映へ">
-    </form>
     	<table>
     		<tr><th>名前</th><th>守備</th><th>試合数</th><th>打率</th>
     		<th>安打数</th><th>本塁打</th><th>打点</th><th>出塁率</th></tr>
@@ -43,6 +40,8 @@
 					<% if(userBean.getAutFlg().equals("1")) {%>
 						<form action="<%=request.getContextPath()%>/CCCUserUpDellController" method="post">
 							<td><button type="submit" name="update" value="${list.userId}">更新</button></td>
+							<td><button type="submit" name="kjnGraDay" value="${list.userId}">本日の試合結果を反映</button></td>
+							<td><button type="submit" name="kjnGra" value="${list.userId}">個人成績を修正する</button></td>
 							<c:choose>
 								<c:when test="${list.userId == userBean.getUserId()}"><td><button type="submit" name="delete" value="${list.userId}" onClick="return dips()" disabled>削除</button></td></c:when>
 								<c:otherwise><td><button type="submit" name="delete" value="${list.userId}" onClick="return dips()">削除</button></td></c:otherwise>

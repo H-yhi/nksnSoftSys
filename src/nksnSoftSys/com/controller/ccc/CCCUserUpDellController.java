@@ -11,12 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import nksnSoftSys.com.bean.aut.AutBean;
-import nksnSoftSys.com.bean.con.ConBean;
 import nksnSoftSys.com.bean.hand.HandBean;
+import nksnSoftSys.com.bean.kjnGra.kjnGraBean;
 import nksnSoftSys.com.bean.posi.PosiBean;
 import nksnSoftSys.com.bean.userInfo.UserBean;
 import nksnSoftSys.com.dao.aut.AutDao;
-import nksnSoftSys.com.dao.con.ConDao;
 import nksnSoftSys.com.dao.hand.HandDao;
 import nksnSoftSys.com.dao.kjnGra.KjnGraDao;
 import nksnSoftSys.com.dao.posi.PosiDao;
@@ -42,17 +41,17 @@ public class CCCUserUpDellController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
-		ConDao conDao = new ConDao();
-		List<ConBean> conBeanList = conDao.conFindAll();
-		request.setAttribute("conBeanList",conBeanList);
+		/*		request.setCharacterEncoding("UTF-8");
+				ConDao conDao = new ConDao();
+				List<ConBean> conBeanList = conDao.conFindAll();
+				request.setAttribute("conBeanList",conBeanList);
 
-		UserDao userDao = new UserDao();
-		List<UserBean> userBeanList = userDao.findAll();
-		request.setAttribute("userBeanList",userBeanList);
+				UserDao userDao = new UserDao();
+				List<UserBean> userBeanList = userDao.findAll();
+				request.setAttribute("userBeanList",userBeanList);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
-		dispatcher.forward(request, response);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
+				dispatcher.forward(request, response);*/
 	}
 
 	/**
@@ -63,8 +62,10 @@ public class CCCUserUpDellController extends HttpServlet {
 
 		String update = request.getParameter("update");
 		String delete = request.getParameter("delete");
+		String kjnGraDay = request.getParameter("kjnGraDay");
+		String kjnGra = request.getParameter("kjnGra");
 
-		if (update == null) {
+		if (delete != null) {
 			UserDao userDao = new UserDao();
 			KjnGraDao kjnGraDao = new KjnGraDao();
 			if(kjnGraDao.kjnGraDell(delete)) {
@@ -79,7 +80,7 @@ public class CCCUserUpDellController extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/applicationList.jsp");
 				dispatcher.forward(request, response);
 			}
-		}else {
+		}else if(update != null) {
 			UserDao userDao = new UserDao();
 			UserBean userBean = userDao.userFind(update);
 			request.setAttribute("userBean", userBean);
@@ -94,6 +95,16 @@ public class CCCUserUpDellController extends HttpServlet {
 			request.setAttribute("autBean",autBean);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upUser.jsp");
 			dispatcher.forward(request, response);
+		}else if(kjnGraDay != null) {
+			UserDao userDao = new UserDao();
+			UserBean userBean = userDao.userFind(kjnGraDay);
+			request.setAttribute("userBean",userBean);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
+			dispatcher.forward(request, response);
+		}else {
+			KjnGraDao kjnGraDao = new KjnGraDao();
+			kjnGraBean kjnGraBean = kjnGraDao.kjnGraFind(kjnGra);
+			request.setAttribute("kjnGraBean",kjnGraBean);
 		}
 	}
 
