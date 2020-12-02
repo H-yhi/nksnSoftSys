@@ -125,9 +125,9 @@ public class UserDao {
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
 
 			String sql1 = "select user_info.user_id,name, posi_name, game,";
-			String sql2 = "cast(( (hit + sec_hit + thr_hit + home_run) / at_bat) as char) as ave,";
+			String sql2 = "cast(( (hit + sec_hit + thr_hit + home_run) / bat_con) as char) as ave,";
 			String sql3 = "home_run, rbi, hit + sec_hit + thr_hit + home_run as all_hit,";
-			String sql4 = "cast((hit + sec_hit + thr_hit + home_run + fo_ball + de_ball) / (at_bat + fo_ball + de_ball + sac_fly) as char) as on_base_ave";
+			String sql4 = "cast((hit + sec_hit + thr_hit + home_run + fo_ball + de_ball) / (bat_con + fo_ball + de_ball + sac_fly) as char) as on_base_ave";
 			String sql5 = "from user_info";
 			String sql6 = "inner join posi_tbl";
 			String sql7 = "inner join kjn_gra_tbl";

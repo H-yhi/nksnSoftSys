@@ -105,6 +105,8 @@ public class CCCUserUpDellController extends HttpServlet {
 			KjnGraDao kjnGraDao = new KjnGraDao();
 			kjnGraBean kjnGraBean = kjnGraDao.kjnGraFind(kjnGra);
 			request.setAttribute("kjnGraBean",kjnGraBean);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGraTotl.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 

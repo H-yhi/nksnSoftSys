@@ -199,27 +199,29 @@ public class KjnGraDao {
 			ps.setString(1, userId);
 			ResultSet rs = ps.executeQuery();
 
-			String userId1 = rs.getString("u.user_id");
-			String name = rs.getString("u.name");
-			int game = rs.getInt("game");
-			int atBat = rs.getInt("at_bat");
-			int batCon = rs.getInt("bat_con");
-			int hit = rs.getInt("hit");
-			int secHit = rs.getInt("sec_hit");
-			int thrHit = rs.getInt("thr_hit");
-			int homeRun = rs.getInt("home_run");
-			int rbi = rs.getInt("rbi");
-			int stBase = rs.getInt("st_base");
-			int foBall = rs.getInt("fo_ball");
-			int deBall = rs.getInt("de_ball");
-			int sacRoll = rs.getInt("sac_roll");
-			int sacFly = rs.getInt("sacFly");
-			kjnGraBean kjnGraBean = new kjnGraBean(userId1,name,game,
-					atBat,batCon,hit,
-					secHit,thrHit,homeRun,
-					rbi,stBase,foBall,
-					deBall,sacRoll,sacFly);
-			return kjnGraBean;
+			if(rs.next()) {
+				String userId1 = rs.getString("u.user_id");
+				String name = rs.getString("u.name");
+				int game = rs.getInt("game");
+				int atBat = rs.getInt("at_bat");
+				int batCon = rs.getInt("bat_con");
+				int hit = rs.getInt("hit");
+				int secHit = rs.getInt("sec_hit");
+				int thrHit = rs.getInt("thr_hit");
+				int homeRun = rs.getInt("home_run");
+				int rbi = rs.getInt("rbi");
+				int stBase = rs.getInt("st_base");
+				int foBall = rs.getInt("fo_ball");
+				int deBall = rs.getInt("de_ball");
+				int sacRoll = rs.getInt("sac_roll");
+				int sacFly = rs.getInt("sac_Fly");
+				kjnGraBean kjnGraBean = new kjnGraBean(userId1,name,game,
+						atBat,batCon,hit,
+						secHit,thrHit,homeRun,
+						rbi,stBase,foBall,
+						deBall,sacRoll,sacFly);
+				return kjnGraBean;
+			}
 
 
 		}catch(SQLException e) {
@@ -237,6 +239,59 @@ public class KjnGraDao {
 					return null;
 				}
 			}
-		}
+		}return null;
+	}
+
+	public boolean kjnGraUp(String userId, int game,int atBat,
+			int batCon, int hit, int secHit,
+			int thrHit, int homeRun, int rbi,
+			int stBase, int foBall, int deBall,
+			int sacRoll, int sacFly) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
+
+			String sql1 = "update kjn_gra_tbl set game = ?,";
+			String sql2 = "at_bat = ?, bat_con = ?, hit = ?,";
+			String sql3 = "sec_hit = ?, thr_hit = ?, home_run = ?,";
+			String sql4 = "rbi = ?, st_base = ?, fo_ball = ?,";
+			String sql5 = "de_ball = ?, sac_roll = ?, sac_fly = ?";
+			String sql6 = "where user_id = ?";
+			String sql7 = sql1 + " " + sql2 + " " + sql3 + " " + sql4 + " " + sql5 + " " + sql6;
+			PreparedStatement ps= con.prepareStatement(sql7);
+			ps.setInt(1, game);
+			ps.setInt(2, atBat);
+			ps.setInt(3, batCon);
+			ps.setInt(4, hit);
+			ps.setInt(5, secHit);
+			ps.setInt(6, thrHit);
+			ps.setInt(7, homeRun);
+			ps.setInt(8, rbi);
+			ps.setInt(9, stBase);
+			ps.setInt(10, foBall);
+			ps.setInt(11, deBall);
+			ps.setInt(12, sacRoll);
+			ps.setInt(13, sacFly);
+			ps.setString(14, userId);
+			ps.executeUpdate();
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally{
+			if(con != null) {
+				try {
+					con.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+		}return true;
+
 	}
 }

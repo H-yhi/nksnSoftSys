@@ -43,6 +43,7 @@ public class EEEupKjnGraController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String userId = request.getParameter("userId");
+		try {
 		int atBat = Integer.parseInt(request.getParameter("atBat"));
 		int batCon = Integer.parseInt(request.getParameter("batCon"));
 		int hit = Integer.parseInt(request.getParameter("hit"));
@@ -55,7 +56,6 @@ public class EEEupKjnGraController extends HttpServlet {
 		int deBall = Integer.parseInt(request.getParameter("deBall"));
 		int sacRoll = Integer.parseInt(request.getParameter("sacRoll"));
 		int sacFly = Integer.parseInt(request.getParameter("sacFly"));
-
 		if(atBat < 0 || batCon < 0 || hit < 0
 				|| secHit < 0 || thrHit < 0 || homeRun < 0
 				|| rbi < 0 || stBase < 0 || foBall < 0
@@ -75,6 +75,26 @@ public class EEEupKjnGraController extends HttpServlet {
 			List<UserBean> list = aaaLoginDao.findAll();
 			request.setAttribute("list", list);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/applicationList.jsp");
+			dispatcher.forward(request, response);
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+			String atBat = request.getParameter("atBat");
+			String batCon = request.getParameter("batCon");
+			String hit = request.getParameter("hit");
+			String secHit = request.getParameter("secHit");
+			String thrHit = request.getParameter("thrHit");
+			String homeRun = request.getParameter("homeRun");
+			String rbi = request.getParameter("rbi");
+			String stBase = request.getParameter("stBase");
+			String foBall = request.getParameter("foBall");
+			String deBall = request.getParameter("deBall");
+			String sacRoll = request.getParameter("sacRoll");
+			String sacFly = request.getParameter("sacFly");
+			regUser(userId,request);
+			sReqFlg(atBat,batCon,hit,secHit,thrHit,homeRun,rbi,stBase,foBall,deBall,sacRoll,sacFly,request);
+			request.setAttribute("message","'数値'を入力しください！！");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
 			dispatcher.forward(request, response);
 		}
 
@@ -100,6 +120,24 @@ public class EEEupKjnGraController extends HttpServlet {
 		UserDao userDao = new UserDao();
 		UserBean userBean = userDao.userFind(userId);
 		request.setAttribute("userBean",userBean);
+	}
+
+	private void sReqFlg(String atBat, String batCon, String hit,
+			String secHit,String thrHit, String homeRun,
+			String rbi, String stBase, String foBall,
+			String deBall, String sacRoll, String sacFly, HttpServletRequest request) {
+		request.setAttribute("atBat",atBat);
+		request.setAttribute("batCon",batCon);
+		request.setAttribute("hit",hit);
+		request.setAttribute("secHit", secHit);
+		request.setAttribute("thrHit",thrHit);
+		request.setAttribute("homeRun",homeRun);
+		request.setAttribute("rbi",rbi);
+		request.setAttribute("stBase",stBase);
+		request.setAttribute("foBall",foBall);
+		request.setAttribute("deBall",deBall);
+		request.setAttribute("sacRoll",sacRoll);
+		request.setAttribute("sacFly",sacFly);
 	}
 
 }
