@@ -34,4 +34,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>java-getting-started</name>
+			<type>2</type>
+			<location>/Users/yuhei_hori/rakus/nksnSoftSys/java-getting-started</location>
+		</link>
+	</linkedResources>
 </projectDescription>
