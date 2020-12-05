@@ -5,6 +5,7 @@
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/controller/bbb/BBBUserRegController.java
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/dao/aut/AutDao.java
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/controller/eee/EEEupKjnGraController.java
+/Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/bean/kjnGra/KjnGraBean.java
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/form/user/UserErrorCheck.java
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/controller/aaa/AAALoginController.java
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/controller/fff/FFFupKjnGraController.java
@@ -13,7 +14,6 @@
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/bean/con/ConBean.java
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/dao/user/UserDao.java
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/bean/aut/AutBean.java
-/Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/bean/kjnGra/kjnGraBean.java
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/controller/ddd/DDDUserUpController.java
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/bean/hand/HandBean.java
 /Applications/Eclipse_2019-06.app/Contents/workspace/nksnSoftSys/src/nksnSoftSys/com/dao/kjnGra/KjnGraDao.java

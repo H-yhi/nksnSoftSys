@@ -17,4 +17,4 @@ nksnSoftSys/com/controller/eee/EEEupKjnGraController.class
 nksnSoftSys/com/dao/kjnGra/KjnGraDao.class
 nksnSoftSys/com/dao/posi/PosiDao.class
 nksnSoftSys/com/bean/con/ConBean.class
-nksnSoftSys/com/bean/kjnGra/kjnGraBean.class
+nksnSoftSys/com/bean/kjnGra/KjnGraBean.class
