@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import nksnSoftSys.com.bean.kjnGra.kjnGraBean;
+import nksnSoftSys.com.bean.kjnGra.KjnGraBean;
 
 public class KjnGraDao {
 	final String jdbcId = "root";
@@ -43,9 +43,9 @@ public class KjnGraDao {
 		}return true;
 	}
 
-	public List<kjnGraBean> kjnGraFindAll() {
+	public List<KjnGraBean> kjnGraFindAll() {
 		Connection con = null;
-		List<kjnGraBean> kjnGraList = new ArrayList<kjnGraBean>();
+		List<KjnGraBean> kjnGraList = new ArrayList<KjnGraBean>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
@@ -73,7 +73,7 @@ public class KjnGraDao {
 				int deBall = rs.getInt("de_ball");
 				int sacRoll = rs.getInt("sac_roll");
 				int sacFly = rs.getInt("sac_fly");
-				kjnGraBean kjnGraBean = new kjnGraBean(userId,name,game,
+				KjnGraBean kjnGraBean = new KjnGraBean(userId,name,game,
 						atBat,batCon,hit,
 						secHit,thrHit,homeRun,
 						rbi,stBase,foBall,
@@ -180,7 +180,7 @@ public class KjnGraDao {
 
 	}
 
-	public kjnGraBean kjnGraFind(String userId) {
+	public KjnGraBean kjnGraFind(String userId) {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -215,7 +215,7 @@ public class KjnGraDao {
 				int deBall = rs.getInt("de_ball");
 				int sacRoll = rs.getInt("sac_roll");
 				int sacFly = rs.getInt("sac_Fly");
-				kjnGraBean kjnGraBean = new kjnGraBean(userId1,name,game,
+				KjnGraBean kjnGraBean = new KjnGraBean(userId1,name,game,
 						atBat,batCon,hit,
 						secHit,thrHit,homeRun,
 						rbi,stBase,foBall,

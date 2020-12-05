@@ -2,7 +2,7 @@ package nksnSoftSys.com.bean.kjnGra;
 
 import java.io.Serializable;
 
-public class kjnGraBean implements Serializable {
+public class KjnGraBean implements Serializable {
 
 	private String userId; // ユーザーID
 	private int game; // 試合数
@@ -22,11 +22,11 @@ public class kjnGraBean implements Serializable {
 	private String onBaseAve; // 出塁率
 	private String name; // 名前
 
-	public kjnGraBean() {}
-	public kjnGraBean(String userId) {
+	public KjnGraBean() {}
+	public KjnGraBean(String userId) {
 		this.userId = userId;
 	}
-	public kjnGraBean(String userId, String name, int game,
+	public KjnGraBean(String userId, String name, int game,
 			int atBat, int batCon, int hit,
 			int secHit, int thrHit, int homeRun,
 			int rbi, int stBase, int foBall,

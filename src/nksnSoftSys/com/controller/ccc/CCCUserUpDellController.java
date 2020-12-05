@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import nksnSoftSys.com.bean.aut.AutBean;
 import nksnSoftSys.com.bean.hand.HandBean;
-import nksnSoftSys.com.bean.kjnGra.kjnGraBean;
+import nksnSoftSys.com.bean.kjnGra.KjnGraBean;
 import nksnSoftSys.com.bean.posi.PosiBean;
 import nksnSoftSys.com.bean.userInfo.UserBean;
 import nksnSoftSys.com.dao.aut.AutDao;
@@ -103,7 +103,7 @@ public class CCCUserUpDellController extends HttpServlet {
 			dispatcher.forward(request, response);
 		}else {
 			KjnGraDao kjnGraDao = new KjnGraDao();
-			kjnGraBean kjnGraBean = kjnGraDao.kjnGraFind(kjnGra);
+			KjnGraBean kjnGraBean = kjnGraDao.kjnGraFind(kjnGra);
 			request.setAttribute("kjnGraBean",kjnGraBean);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGraTotl.jsp");
 			dispatcher.forward(request, response);
