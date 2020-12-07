@@ -17,7 +17,7 @@ public class ConDao {
 
 	public List<ConBean> conFindAll(){
 		Connection con = null;
-		List<ConBean> conBeanList = new ArrayList<>();
+		List<ConBean> conBeanList = new ArrayList<ConBean>();
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

@@ -119,7 +119,7 @@ public class UserDao {
 
 	public List<UserBean> findAll(){
 		Connection con = null;
-		List<UserBean> userBeanList = new ArrayList<>();
+		List<UserBean> userBeanList = new ArrayList<UserBean>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);

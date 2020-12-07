@@ -17,7 +17,7 @@ public class PosiDao {
 
 	public List<PosiBean> posiFind() {
 		Connection con = null;
-		List<PosiBean> posiBeanList = new ArrayList<>();
+		List<PosiBean> posiBeanList = new ArrayList<PosiBean>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);

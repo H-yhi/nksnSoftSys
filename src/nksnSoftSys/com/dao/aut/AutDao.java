@@ -18,7 +18,7 @@ public class AutDao {
 
 	public List<AutBean> findAll(){
 		Connection con = null;
-		List<AutBean> autBeanList = new ArrayList<>();
+		List<AutBean> autBeanList = new ArrayList<AutBean>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);

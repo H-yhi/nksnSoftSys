@@ -18,7 +18,7 @@ public class HandDao {
 
 	public List<HandBean> handFind() {
 		Connection con = null;
-		List<HandBean> handBeanList = new ArrayList<>();
+		List<HandBean> handBeanList = new ArrayList<HandBean>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
