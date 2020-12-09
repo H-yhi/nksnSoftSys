@@ -32,9 +32,11 @@
 				</configuration>
 				<dependencies>
 					<dependency>
+						<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 						<groupId>mysql</groupId>
 						<artifactId>mysql-connector-java</artifactId>
 						<version>5.1.48</version>
+						<scope>runtime</scope>
 					</dependency>
 				</dependencies>
 			</plugin>
