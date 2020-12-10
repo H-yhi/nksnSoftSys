@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import nksnSoftSys.com.bean.userInfo.UserBean;
 import nksnSoftSys.com.dao.kjnGra.KjnGraDao;
 import nksnSoftSys.com.dao.user.UserDao;
+import nksnSoftSys.com.form.kjnGra.KjnGraErrorCheck;
 
 /**
  * Servlet implementation class EEEupKjnGraController
@@ -56,26 +57,65 @@ public class EEEupKjnGraController extends HttpServlet {
 		int deBall = Integer.parseInt(request.getParameter("deBall"));
 		int sacRoll = Integer.parseInt(request.getParameter("sacRoll"));
 		int sacFly = Integer.parseInt(request.getParameter("sacFly"));
-		if(atBat < 0 || batCon < 0 || hit < 0
-				|| secHit < 0 || thrHit < 0 || homeRun < 0
-				|| rbi < 0 || stBase < 0 || foBall < 0
-				|| deBall < 0 || sacRoll < 0 || sacFly < 0) {
+		KjnGraErrorCheck kjnGraError = new KjnGraErrorCheck();
+		if(kjnGraError.minCheck(atBat, batCon, hit,
+				secHit, thrHit, homeRun,
+				rbi, stBase, foBall,
+				deBall, sacRoll, sacFly)) {
 			regUser(userId,request);
-			reqFlg(atBat,batCon,hit,secHit,thrHit,homeRun,rbi,stBase,foBall,deBall,sacRoll,sacFly,request);
+			reqFlg(atBat,batCon,hit,
+					secHit,thrHit,homeRun,
+					rbi,stBase,foBall,
+					deBall,sacRoll,sacFly,request);
 			request.setAttribute("message","負数があります。");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
 			dispatcher.forward(request, response);
-		}
-
-		KjnGraDao kjnGraDao = new KjnGraDao();
-
-		if(kjnGraDao.kjnGraUp(userId, atBat, batCon, hit, secHit, thrHit, homeRun, rbi, stBase, foBall, deBall, sacRoll, sacFly)) {
-			request.setAttribute("message","反映しました。");
-			UserDao aaaLoginDao = new UserDao();
-			List<UserBean> list = aaaLoginDao.findAll();
-			request.setAttribute("list", list);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/applicationList.jsp");
+		}else if(kjnGraError.batConCheck(atBat, batCon)) {
+			regUser(userId,request);
+			reqFlg(atBat,batCon,hit,
+					secHit,thrHit,homeRun,
+					rbi,stBase,foBall,
+					deBall,sacRoll,sacFly,request);
+			request.setAttribute("message","打席より打数が多いです");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
 			dispatcher.forward(request, response);
+		}else if(kjnGraError.hitCheck(atBat, hit, secHit, thrHit, homeRun)) {
+			regUser(userId,request);
+			reqFlg(atBat,batCon,hit,
+					secHit,thrHit,homeRun,
+					rbi,stBase,foBall,
+					deBall,sacRoll,sacFly,request);
+			request.setAttribute("message","打席よりヒットの数が多いです");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
+			dispatcher.forward(request, response);
+		}else if(kjnGraError.rbiCheck(homeRun, rbi)) {
+			regUser(userId,request);
+			reqFlg(atBat,batCon,hit,
+					secHit,thrHit,homeRun,
+					rbi,stBase,foBall,
+					deBall,sacRoll,sacFly,request);
+			request.setAttribute("message","打点よりホームランが多いです");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
+			dispatcher.forward(request, response);
+		}else if(kjnGraError.atBatCheck(atBat, batCon, foBall, deBall, sacRoll, sacFly)) {
+			regUser(userId,request);
+			reqFlg(atBat,batCon,hit,
+					secHit,thrHit,homeRun,
+					rbi,stBase,foBall,
+					deBall,sacRoll,sacFly,request);
+			request.setAttribute("message","打席または打数の結果を見直してください");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
+			dispatcher.forward(request, response);
+		}else {
+			KjnGraDao kjnGraDao = new KjnGraDao();
+			if(kjnGraDao.kjnGraUp(userId, atBat, batCon, hit, secHit, thrHit, homeRun, rbi, stBase, foBall, deBall, sacRoll, sacFly)) {
+				request.setAttribute("message","反映しました。");
+				UserDao aaaLoginDao = new UserDao();
+				List<UserBean> list = aaaLoginDao.findAll();
+				request.setAttribute("list", list);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/applicationList.jsp");
+				dispatcher.forward(request, response);
+			}
 		}
 		}catch(Exception e) {
 			e.printStackTrace();

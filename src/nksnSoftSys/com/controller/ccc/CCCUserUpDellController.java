@@ -40,18 +40,6 @@ public class CCCUserUpDellController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		/*		request.setCharacterEncoding("UTF-8");
-				ConDao conDao = new ConDao();
-				List<ConBean> conBeanList = conDao.conFindAll();
-				request.setAttribute("conBeanList",conBeanList);
-
-				UserDao userDao = new UserDao();
-				List<UserBean> userBeanList = userDao.findAll();
-				request.setAttribute("userBeanList",userBeanList);
-
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGra.jsp");
-				dispatcher.forward(request, response);*/
 	}
 
 	/**
