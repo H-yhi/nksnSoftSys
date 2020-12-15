@@ -17,6 +17,11 @@ public class UserBean implements Serializable {
 	private String onBaseAve; //  出塁率
 	private String handId; // 効き投げ効き打ちID
 	private String autFlg; // 権限フラグ
+	private String longHitAve; // 長打率
+	private int foBall; // 四球
+	private int deBall; // 死球
+	private int stBase; // 盗塁
+	private String ops; // ops
 
 	public UserBean() {};
 
@@ -41,7 +46,10 @@ public class UserBean implements Serializable {
 		this.userId = userId;
 	}
 
-	public UserBean(String userId, String name, String posiName, int game, String ave, int hit, int homeRun, int rbi, String onBaseAve) {
+	public UserBean(String userId, String name, String posiName,
+			int game, String ave, int hit,
+			int homeRun, int rbi, String onBaseAve,
+			String longHitAve, int foBall, int deBall, int stBase, String ops) {
 		this.userId = userId;
 		this.name = name;
 		this.posiName = posiName;
@@ -51,6 +59,11 @@ public class UserBean implements Serializable {
 		this.homeRun = homeRun;
 		this.rbi = rbi;
 		this.onBaseAve = onBaseAve;
+		this.longHitAve = longHitAve;
+		this.foBall = foBall;
+		this.deBall = deBall;
+		this.stBase = stBase;
+		this.ops = ops;
 	}
 	public String getPosiId() {
 		return posiId;
@@ -148,6 +161,48 @@ public class UserBean implements Serializable {
 	public void setAutFlg(String autFlg) {
 		this.autFlg = autFlg;
 	}
+
+	public String getLongHitAve() {
+		return longHitAve;
+	}
+
+	public void setLongHitAve(String longHitAve) {
+		this.longHitAve = longHitAve;
+	}
+
+	public int getFoBall() {
+		return foBall;
+	}
+
+	public void setFoBall(int foBall) {
+		this.foBall = foBall;
+	}
+
+	public int getDeBall() {
+		return deBall;
+	}
+
+	public void setDeBall(int deBall) {
+		this.deBall = deBall;
+	}
+
+	public int getStBase() {
+		return stBase;
+	}
+
+	public void setStBase(int stBase) {
+		this.stBase = stBase;
+	}
+
+	public String getOps() {
+		return ops;
+	}
+
+	public void setOps(String ops) {
+		this.ops = ops;
+	}
+
+
 
 
 }

@@ -54,12 +54,23 @@ public class KjnGraErrorCheck {
 		return false;
 	}
 
+	// gameチェック
 	public boolean gameCheck(int game, int atBat, int batCon, int hit,
 			int secHit, int thrHit, int homeRun,
 			int rbi, int stBase, int foBall,
 			int deBall, int sacRoll, int sacFly) {
 		int total = atBat + batCon + hit + secHit + thrHit + homeRun + rbi + stBase + foBall + deBall + sacRoll + sacFly;
 		if(game == 0 && total != 0) {
+			return true;
+		}
+		return false;
+	}
+
+	// 打点チェック
+	public boolean rbiCheck(int atBat, int batCon, int rbi) {
+		if(rbi >= 1 && atBat == 0) {
+			return true;
+		}else if(rbi >= 1 && batCon == 0) {
 			return true;
 		}
 		return false;

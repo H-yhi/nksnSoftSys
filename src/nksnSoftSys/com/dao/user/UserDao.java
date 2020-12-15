@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import nksnSoftSys.com.bean.userInfo.UserBean;
 
@@ -66,19 +64,6 @@ public class UserDao {
 	// 20201122 end
 		Connection con = null;
 		try {
-			String regex_num = "^[0-9]+$" ; // 数値のみ
-			Pattern p1 = Pattern.compile(regex_num);
-			Matcher m1 = p1.matcher(userId);
-			Matcher m2 = p1.matcher(pass);
-			boolean result11 = m1.matches();
-			boolean result12 = m2.matches();
-			if(userId == "" || pass == "" || name == "") {
-				return false;
-			}else if(userId.length() != 4 || pass.length() != 4) {
-				return false;
-			}else if(result11 == false || result12 == false) {
-				return false;
-			}
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
 
@@ -124,9 +109,9 @@ public class UserDao {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
 
-			String sql1 = "select user_info.user_id,name, posi_name, game,";
-			String sql2 = "cast(( (hit + sec_hit + thr_hit + home_run) / bat_con) as char) as ave,";
-			String sql3 = "home_run, rbi, hit + sec_hit + thr_hit + home_run as all_hit,";
+			String sql1 = "select user_info.user_id,name, posi_name, game,cast(((hit) + (sec_hit * 2) + (thr_hit * 3) + (home_run * 4)) / bat_con as char) as long_hit_ave,";
+			String sql2 = "cast(( (hit + sec_hit + thr_hit + home_run) / bat_con) as char) as ave,fo_ball,de_ball,st_base,";
+			String sql3 = "home_run, rbi, hit + sec_hit + thr_hit + home_run as all_hit,cast((((hit) + (sec_hit *2) + (thr_hit  * 3) + (home_run * 4)) / bat_con) + ((hit + sec_hit + thr_hit + home_run + fo_ball + de_ball) / (bat_con + fo_ball + de_ball + sac_fly)) as char) as ops,";
 			String sql4 = "cast((hit + sec_hit + thr_hit + home_run + fo_ball + de_ball) / (bat_con + fo_ball + de_ball + sac_fly) as char) as on_base_ave";
 			String sql5 = "from user_info";
 			String sql6 = "inner join posi_tbl";
@@ -137,6 +122,8 @@ public class UserDao {
 			PreparedStatement ps= con.prepareStatement(sql10);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
+				//String sLongHitAve = null;
+				//String sOps = null;
 				String userId = rs.getString("user_id");
 				String name = rs.getString("name");
 				String posiName = rs.getString("posi_name");
@@ -145,7 +132,12 @@ public class UserDao {
 				int hit = rs.getInt("all_hit");
 				int homeRun = rs.getInt("home_run");
 				int rbi = rs.getInt("rbi");
+				String longHitAve = rs.getString("long_hit_ave");
 				String onBaseAve = rs.getString("on_base_ave");
+				int foBall = rs.getInt("fo_ball");
+				int deBall = rs.getInt("de_ball");
+				int stBase = rs.getInt("st_base");
+				String ops = rs.getString("ops");
 				if (ave == null) {
 					ave = "---";
 				}else if(ave.equals("1.0000")) {
@@ -160,7 +152,31 @@ public class UserDao {
 				}else {
 					onBaseAve = onBaseAve.substring(1,5);
 				}
-				UserBean userBean = new UserBean(userId,name,posiName,game,ave, hit,homeRun,rbi,onBaseAve);
+
+				//double dLongHitAve = Double.parseDouble(longHitAve);
+				if (longHitAve == null) {
+					longHitAve = "---";
+					//sLongHitAve = String.valueOf(longHitAve);
+					//sLongHitAve = sLongHitAve.substring(0,3);
+				}else if(longHitAve.startsWith("0")) {
+					//sLongHitAve = String.valueOf(longHitAve);
+					//sLongHitAve = sLongHitAve.substring(1,3);
+					longHitAve = longHitAve.substring(1,5);
+				}else {
+					longHitAve = longHitAve.substring(0,5);;
+				}
+				if (ops == null) {
+					//sOps = String.valueOf(ops);
+					//sOps = sOps.substring(0,3);
+					ops = "---";
+				}else if(ops.startsWith("0")) {
+					//sOps = String.valueOf(ops);
+					//sOps = sOps.substring(1,3);
+					ops = ops.substring(1,5);
+				}else {
+					ops = ops.substring(0,5);;
+				}
+				UserBean userBean = new UserBean(userId,name,posiName,game,ave, hit,homeRun,rbi,onBaseAve,longHitAve,foBall,deBall,stBase,ops);
 				userBeanList.add(userBean);
 			}
 		}catch(SQLException e) {
@@ -258,17 +274,6 @@ public class UserDao {
 	public boolean userUp(String pass, String name, String posiId, String handId, String autFlg, String userId) {
 		Connection con = null;
 		try {
-			String regex_num = "^[0-9]+$" ; // 数値のみ
-			Pattern p1 = Pattern.compile(regex_num);
-			Matcher m2 = p1.matcher(pass);
-			boolean result12 = m2.matches();
-			if(pass == "" || name == "") {
-				return false;
-			}else if(pass.length() != 4) {
-				return false;
-			}else if(result12 == false) {
-				return false;
-			}
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
 			String sql1 = "update user_info set pass = ?, name = ?, posi_id = ?, hand_id = ?, aut_flg = ?";
