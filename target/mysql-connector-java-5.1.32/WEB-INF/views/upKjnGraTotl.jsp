@@ -3,6 +3,7 @@
 <%
 	KjnGraBean kjnGraBean = (KjnGraBean) request.getAttribute("kjnGraBean");
 %>
+<% String message = (String)request.getAttribute("message"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -25,10 +26,20 @@ table tr:nth-child(odd) {
 	background-color: #eee
 }
 </style>
+<script>
+	function dips() {
+		if (window.confirm('本当にいいんですね？') == false) {
+			return false;
+		}
+	}
+</script>
 </head>
 <body>
-	<form action="<%=request.getContextPath()%>/FFFupKjnGraController" method="post">
+	<form action="<%=request.getContextPath()%>/FFFupKjnGraController"
+		method="post">
+		<span class="label label-danger">${message}</span>
 		<button name="userId" value="${kjnGraBean.getUserId()}">反映する</button>
+		<input type="button" value="戻る" onClick="history.back()">
 		<table>
 			<tr>
 				<th>名前</th>
@@ -47,6 +58,36 @@ table tr:nth-child(odd) {
 				<th>犠飛</th>
 			</tr>
 			<tr>
+				<%
+					if (message != null) {
+				%>
+				<td><c:out value="${kjnGraBean.getName()}" /></td>
+				<td><input name="game" value="${game}" size="5"></td>
+				<td><input name="atBat" value="${atBat}"
+					size="5"></td>
+				<td><input name="batCon" value="${batCon}"
+					size="5"></td>
+				<td><input name="hit" value="${hit}" size="5"></td>
+				<td><input name="secHit" value="${secHit}"
+					size="5"></td>
+				<td><input name="thrHit" value="${thrHit}"
+					size="5"></td>
+				<td><input name="homeRun" value="${homeRun}"
+					size="5"></td>
+				<td><input name="rbi" value="${rbi}" size="5"></td>
+				<td><input name="stBase" value="${stBase}"
+					size="5"></td>
+				<td><input name="foBall" value="${foBall}"
+					size="5"></td>
+				<td><input name="deBall" value="${deBall}"
+					size="5"></td>
+				<td><input name="sacRoll" value="${sacRoll}"
+					size="5"></td>
+				<td><input name="sacFly" value="${sacFly}"
+					size="5"></td>
+				<%
+					} else {
+				%>
 				<td><c:out value="${kjnGraBean.getName()}" /></td>
 				<td><input name="game" value="${kjnGraBean.getGame()}" size="5"></td>
 				<td><input name="atBat" value="${kjnGraBean.getAtBat()}"
@@ -71,6 +112,9 @@ table tr:nth-child(odd) {
 					size="5"></td>
 				<td><input name="sacFly" value="${kjnGraBean.getSacFly()}"
 					size="5"></td>
+				<%
+					}
+				%>
 			</tr>
 		</table>
 	</form>
