@@ -90,13 +90,13 @@ public class FFFupKjnGraController extends HttpServlet {
 				request.setAttribute("message", "打席よりヒットの数が多いです");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGraTotl.jsp");
 				dispatcher.forward(request, response);
-			} else if (kjnGraError.rbiCheck(homeRun, rbi)) {
+			} else if (kjnGraError.rbiCheck(homeRun, rbi, sacFly, sacFly)) {
 				regUser(userId, request);
 				reqFlg(game, atBat, batCon, hit,
 						secHit, thrHit, homeRun,
 						rbi, stBase, foBall,
 						deBall, sacRoll, sacFly, request);
-				request.setAttribute("message", "打点よりホームランが多いです");
+				request.setAttribute("message", "ホームランまたは打席または犠牲フライが打点より多いです");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/upKjnGraTotl.jsp");
 				dispatcher.forward(request, response);
 			} else if (kjnGraError.atBatCheck(atBat, batCon, foBall, deBall, sacRoll, sacFly)) {

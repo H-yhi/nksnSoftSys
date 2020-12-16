@@ -35,12 +35,17 @@ public class KjnGraErrorCheck {
 		return false;
 	}
 
-	// ホームラン > 打点のチェック
-	public boolean rbiCheck(int homeRun, int rbi) {
+	// ホームラン、打席、犠牲フライ > 打点のチェック
+	public boolean rbiCheck(int homeRun, int rbi, int atBat, int secFly) {
 		if(homeRun > rbi) {
 			return true;
+		}else if(rbi > atBat) {
+			return true;
+		}else if(rbi < secFly) {
+			return true;
+		}else {
+			return false;
 		}
-		return false;
 	}
 
 	// 打席 - 打数 == 四死球 + バント + 犠牲フライであるか
@@ -67,13 +72,6 @@ public class KjnGraErrorCheck {
 	}
 
 	// 打点チェック
-	public boolean rbiCheck(int atBat, int batCon, int rbi) {
-		if(rbi >= 1 && atBat == 0) {
-			return true;
-		}else if(rbi >= 1 && batCon == 0) {
-			return true;
-		}
-		return false;
-	}
+
 
 }
