@@ -22,6 +22,8 @@ public class UserBean implements Serializable {
 	private int deBall; // 死球
 	private int stBase; // 盗塁
 	private String ops; // ops
+	private int secRoll; // 犠打
+	private int secFly; // 犠飛
 
 	public UserBean() {};
 
@@ -49,7 +51,8 @@ public class UserBean implements Serializable {
 	public UserBean(String userId, String name, String posiName,
 			int game, String ave, int hit,
 			int homeRun, int rbi, String onBaseAve,
-			String longHitAve, int foBall, int deBall, int stBase, String ops) {
+			String longHitAve, int foBall, int deBall, int stBase, String ops,
+			int secRoll, int secFly) {
 		this.userId = userId;
 		this.name = name;
 		this.posiName = posiName;
@@ -64,6 +67,7 @@ public class UserBean implements Serializable {
 		this.deBall = deBall;
 		this.stBase = stBase;
 		this.ops = ops;
+		this.secRoll = secRoll;
 	}
 	public String getPosiId() {
 		return posiId;
@@ -202,7 +206,19 @@ public class UserBean implements Serializable {
 		this.ops = ops;
 	}
 
+	public int getSecRoll() {
+		return secRoll;
+	}
 
+	public void setSecRoll(int secRoll) {
+		this.secRoll = secRoll;
+	}
 
+	public int getSecFly() {
+		return secFly;
+	}
 
+	public void setSecFly(int secFly) {
+		this.secFly = secFly;
+	}
 }

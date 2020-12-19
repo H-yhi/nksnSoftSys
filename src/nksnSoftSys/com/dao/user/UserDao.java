@@ -110,7 +110,7 @@ public class UserDao {
 			con = DriverManager.getConnection(jdbcUrl, jdbcId, jdbcPass);
 
 			String sql1 = "select user_info.user_id,name, posi_name, game,cast(((hit) + (sec_hit * 2) + (thr_hit * 3) + (home_run * 4)) / bat_con as char) as long_hit_ave,";
-			String sql2 = "cast(( (hit + sec_hit + thr_hit + home_run) / bat_con) as char) as ave,fo_ball,de_ball,st_base,";
+			String sql2 = "cast(( (hit + sec_hit + thr_hit + home_run) / bat_con) as char) as ave,fo_ball,de_ball,st_base,sac_roll,sac_fly,";
 			String sql3 = "home_run, rbi, hit + sec_hit + thr_hit + home_run as all_hit,cast((((hit) + (sec_hit *2) + (thr_hit  * 3) + (home_run * 4)) / bat_con) + ((hit + sec_hit + thr_hit + home_run + fo_ball + de_ball) / (bat_con + fo_ball + de_ball + sac_fly)) as char) as ops,";
 			String sql4 = "cast((hit + sec_hit + thr_hit + home_run + fo_ball + de_ball) / (bat_con + fo_ball + de_ball + sac_fly) as char) as on_base_ave";
 			String sql5 = "from user_info";
@@ -138,6 +138,8 @@ public class UserDao {
 				int deBall = rs.getInt("de_ball");
 				int stBase = rs.getInt("st_base");
 				String ops = rs.getString("ops");
+				int sacRoll = rs.getInt("sac_roll");
+				int sacFly = rs.getInt("sac_fly");
 				if (ave == null) {
 					ave = "---";
 				}else if(ave.equals("1.0000")) {
@@ -176,7 +178,11 @@ public class UserDao {
 				}else {
 					ops = ops.substring(0,5);;
 				}
-				UserBean userBean = new UserBean(userId,name,posiName,game,ave, hit,homeRun,rbi,onBaseAve,longHitAve,foBall,deBall,stBase,ops);
+				UserBean userBean = new UserBean(userId,name,posiName,
+						game,ave, hit,
+						homeRun,rbi,onBaseAve,
+						longHitAve,foBall,deBall,
+						stBase,ops,sacRoll,sacFly);
 				userBeanList.add(userBean);
 			}
 		}catch(SQLException e) {
