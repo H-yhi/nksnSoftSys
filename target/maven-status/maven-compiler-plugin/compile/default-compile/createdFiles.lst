@@ -9,6 +9,7 @@ nksnSoftSys/com/bean/hand/HandBean.class
 nksnSoftSys/com/controller/bbb/BBBUserRegController.class
 nksnSoftSys/com/bean/posi/PosiBean.class
 nksnSoftSys/com/controller/fff/FFFupKjnGraController.class
+nksnSoftSys/com/form/kjnGra/KjnGraErrorCheck.class
 nksnSoftSys/TopIndexController.class
 nksnSoftSys/com/dao/user/UserDao.class
 nksnSoftSys/com/bean/aut/AutBean.class
